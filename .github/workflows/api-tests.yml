@@ -2,6 +2,7 @@
 
 on:
   workflow_dispatch:
+  push:
 
 jobs:
   run-postman-tests:
@@ -20,6 +21,4 @@ jobs:
         run: npm install -g newman
 
       - name: Run Postman Collection
-        run: |
-          newman run testing.json \
-          -e testing_env.json
+        run: newman run testing -e testing_env
