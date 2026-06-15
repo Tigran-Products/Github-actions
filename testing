@@ -1,0 +1,487 @@
+{
+  "info": {
+    "_postman_id": "0b52305d-e0c5-4b99-ab4f-d645bd849df3",
+    "name": "Testing heroky",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55897536",
+    "_collection_link": "https://go.postman.co/collection/55897536-0b52305d-e0c5-4b99-ab4f-d645bd849df3?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Get a token",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => {\r",
+              "    pm.response.to.have.status(200);\r",
+              "})\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Response to contain a token\", () => {\r",
+              "    pm.expect(response).to.haveOwnProperty(\"token\")\r",
+              "})\r",
+              "\r",
+              "pm.test(\"Response token to be a string\", () => {\r",
+              "    pm.expect(response.token).to.be.a(\"string\")\r",
+              "    pm.environment.set(\"token\", pm.response.json().token)\r",
+              "})\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\" : \"admin\",\r\n    \"password\" : \"password123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/auth",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "auth"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get all bookings",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status to be 200\", () => {\r",
+              "    pm.response.to.have.status(200)\r",
+              "})\r",
+              "\r",
+              "const response = pm.response.json()\r",
+              "\r",
+              "pm.test(\"Response to be an array\", () => {\r",
+              "    pm.expect(response).to.be.an(\"array\")\r",
+              "})\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/booking",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "booking"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create a booking",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status to be 200\", () => {\r",
+              "    pm.response.to.have.status(200)\r",
+              "})\r",
+              "\r",
+              "const response = pm.response.json()\r",
+              "\r",
+              "pm.test(\"Response to be an object\", () => {\r",
+              "    pm.expect(response).to.be.an(\"object\")\r",
+              "})\r",
+              "\r",
+              "pm.test(\"Response to have a property bookingid\", () => {\r",
+              "    pm.expect(response).haveOwnProperty(\"bookingid\")\r",
+              "})\r",
+              "\r",
+              "pm.test(\"Property bookingid should be a number\", () => {\r",
+              "    pm.expect(response.bookingid).to.be.a(\"number\")\r",
+              "})\r",
+              "\r",
+              "pm.test(\"Response to have a property booking\", () => {\r",
+              "    pm.expect(response).haveOwnProperty(\"booking\")\r",
+              "})\r",
+              "\r",
+              "pm.test(\"booking property should be an object\", () => {\r",
+              "    pm.expect(response.booking).to.be.an(\"object\")\r",
+              "})\r",
+              "\r",
+              "\r",
+              "\r",
+              "\r",
+              "\r",
+              "pm.environment.set(\"bookingid\", pm.response.json().bookingid)"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"firstname\" : \"Jim\",\r\n    \"lastname\" : \"Brown\",\r\n    \"totalprice\" : 111,\r\n    \"depositpaid\" : true,\r\n    \"bookingdates\" : {\r\n        \"checkin\" : \"2018-01-01\",\r\n        \"checkout\" : \"2019-01-01\"\r\n    },\r\n    \"additionalneeds\" : \"Breakfast\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/booking",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "booking"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get booking by ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status to be 200\", () => {\r",
+              "    pm.response.to.have.status(200)\r",
+              "})\r",
+              "\r",
+              "const response = pm.response.json()\r",
+              "\r",
+              "pm.test(\"Response to be an object\", () => {\r",
+              "    pm.expect(response).to.be.an(\"object\")\r",
+              "})\r",
+              "\r",
+              "\r",
+              "pm.environment.set(\"firstname\", response?.firstname || \"Unknown\" )"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/booking/:id",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "booking",
+            ":id"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": "{{bookingid}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get bookings by name",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status to be 200\", () => {\r",
+              "    pm.response.to.have.status(200)\r",
+              "})\r",
+              "\r",
+              "const response = pm.response.json()\r",
+              "\r",
+              "pm.test(\"Response to be an array\", () => {\r",
+              "    pm.expect(response).to.be.an(\"array\")\r",
+              "})\r",
+              "\r",
+              "pm.test(\"Response to have a property bookingid\", () => {\r",
+              "    pm.expect(response[0]).haveOwnProperty(\"bookingid\")\r",
+              "})\r",
+              "\r",
+              "pm.test(\"Property bookingid should be a number\", () => {\r",
+              "    pm.expect(response[0].bookingid).to.be.a(\"number\")\r",
+              "})"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/booking?firstname={{firstname}}",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "booking"
+          ],
+          "query": [
+            {
+              "key": "firstname",
+              "value": "{{firstname}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update a booking",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status to be 200\", () => {\r",
+              "    pm.response.to.have.status(200)\r",
+              "})\r",
+              "\r",
+              "const response = pm.response.json()\r",
+              "\r",
+              "pm.test(\"Response to be an object\", () => {\r",
+              "    pm.expect(response).to.be.an(\"object\")\r",
+              "})\r",
+              "\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "token={{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"firstname\" : \"James\",\r\n    \"lastname\" : \"Brown\",\r\n    \"totalprice\" : 111,\r\n    \"depositpaid\" : true,\r\n    \"bookingdates\" : {\r\n        \"checkin\" : \"2018-01-01\",\r\n        \"checkout\" : \"2019-01-01\"\r\n    },\r\n    \"additionalneeds\" : \"Breakfast\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/booking/:id",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "booking",
+            ":id"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": "{{bookingid}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Change a small part of the booking",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status to be 200\", () => {\r",
+              "    pm.response.to.have.status(200)\r",
+              "})\r",
+              "\r",
+              "const response = pm.response.json()\r",
+              "\r",
+              "pm.test(\"Response to be an object\", () => {\r",
+              "    pm.expect(response).to.be.an(\"object\")\r",
+              "})\r",
+              "\r",
+              "\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "token={{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"firstname\" : \"James\",\r\n    \"lastname\" : \"Brown\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/booking/:id",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "booking",
+            ":id"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": "{{bookingid}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete a booking",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"The response has text Created\", function () {\r",
+              "    pm.expect(pm.response.text()).to.include(\"Created\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "token={{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"firstname\" : \"James\",\r\n    \"lastname\" : \"Brown\"\r\n}"
+        },
+        "url": {
+          "raw": "{{url}}/booking/:id",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "booking",
+            ":id"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": "{{bookingid}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}
